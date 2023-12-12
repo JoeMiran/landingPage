@@ -17,44 +17,76 @@ async function getPosts(id) {
 }
 
 // MÉTODO PARA OBTENER USUARIOS
-async function getUsers() {
-    await fetch('https://jsonplaceholder.typicode.com/users')
-        .then((resp) => {
-            return resp.json();
-        })
-        .then((user) => {
-
-            for (let i = 0; i < 4; i++) {
-                const usuario = user[i];
-                getPosts(usuario.id).then(resp => {
-                    usuario.posts = resp;
-                    user[i] = usuario;
-                    let string = '';
-
-                    if (user[i].id === 1) {
-                        string += `
-                            <div class="carousel-item active">
-                                <img class="d-block mx-auto" src="images/person_${i + 1}.jpg" alt=""> 
-                        `;
-                    } else {
-                        string += `
-                            <div class="carousel-item">
-                                <img class="d-block mx-auto" src="images/person_${i + 1}.jpg" alt=""> 
-                        `;
-                    }
-
-                    string += ` <p class="text-center sliderText">${usuario.posts[0].body}</p>`;
-                    string += `<p class="text-center"><b>${usuario.name}</b></p>`;
-                    string += `</div>`;
-
-                    texto.innerHTML += string;
-
-                    ;
-                });
+let users = [
+    {
+        id: 1,
+        name: "Jean Dean",
+        posts: [
+            {
+                body: "Gerente de Projetos"
             }
-        }).catch((error) => {
-            console.log('ERROR: ', error);
-        });
-}
+        ]
+    },
+    {
+        id: 2,
+        name: "Kauan Tavares",
+        posts: [
+            {
+                body: "Engenheiro Eletricista"
+            }
+        ]
+    },
+    {
+        id: 3,
+        name: "Joel Tavares",
+        posts: [
+            {
+                body: "Engenheiro de Software"
+            }
+        ]
+    },
+    {
+        id: 4,
+        name: "Marco Antonio",
+        posts: [
+            {
+                body: "Engenheiro de desing do produto"
+            }
+        ]
+    },
+    {
+        id: 5,
+        name: "Danton Araujo",
+        posts: [
+            {
+                body: "Engenheiro Eletricista"
+            }
+        ]
+    }
+];
 
+async function getUsers() {
+    for (let i = 0; i < 5; i++) {
+        const usuario = users[i];
+        let string = '';
+
+        if (usuario.id === 1) {
+            string += `
+                <div class="carousel-item active">
+                    <img class="d-block mx-auto" src="images/person_${i + 1}.jpeg" alt=""> 
+            `;
+        } else {
+            string += `
+                <div class="carousel-item">
+                    <img class="d-block mx-auto" src="images/person_${i + 1}.jpeg" alt=""> 
+            `;
+        }
+
+        string += ` <p class="text-center sliderText">${usuario.posts[0].body}</p>`;
+        string += `<p class="text-center"><b>${usuario.name}</b></p>`;
+        string += `</div>`;
+
+        texto.innerHTML += string;
+    }
+}
 getUsers();
